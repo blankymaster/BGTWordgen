@@ -1,0 +1,33 @@
+/*
+Word Generator BGT Version
+Created by Patrick Wilson
+BGT Note: BGt is out of date, but since I'm not that good at programming, this is what I had to do. If you need an installer or a compiled version of the software, please let me know and I'll get you it.
+For this reason, the words might take a few minutes to generate. This is because it has to process every line (in the default file about 370000) and then pick a random word.
+If you want to process a smaller file to pick from, just make your own text document (.txt extension with no special formatting) and tell the program to open it. Each word should be on it's own line.
+*/
+file f; //You'll see why later.
+void main()
+{
+f.open(input_box("file you want to open","Please specify what document you would like to open.","words_alpha.txt"),"rb");
+show_game_window("Word Generator - Generating Words...");
+string[] words=string_split(f.read(),"\r\n",false); //We want the words to be each added as an entry to this newly created words array.
+f.close;
+while(true)
+{
+if(key_pressed(KEY_ESCAPE)||key_down(KEY_LMENU)&&key_pressed(KEY_F4)) exit(); //You can press the escape key to exit.
+}
+string final=random_string_from(words);
+alert("Hi","Your random word is: "+final);
+if(question("Copy to Windows Clipboard","Would you like to copy this word to the clipboard?")==1) clipboard_copy_text(final);
+exit();
+} //End function
+string random_string_from(string[] arraystring,bool exclude=false,string excluding="")
+{
+string[] r;
+for(uint i=0; i<arraystring.length(); i+=1) {
+if(exclude==true and arraystring[i]==excluding) continue;
+r.insert_last(arraystring[i]);
+} //End for
+string retval=r[random(0,r.length()-1)];
+return retval;
+} //End random_string_from
